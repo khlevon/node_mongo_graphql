@@ -1,0 +1,84 @@
+type ProductRating {
+  mean: Float!
+  list(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: ratingGetAllFilter
+  ): RatingConnection!
+}
+
+type Product implements INode {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+  discountPercentage: Float
+  stock: Int!
+  brand: String!
+  category: String!
+  thumbnail: String
+  images: [String!]!
+  isBlocked: Boolean!
+  createdAt: DateTime!
+
+  # Abstractions
+  owner: User!
+  rating: ProductRating!
+  comments(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: commentGetAllFilter
+  ): CommentConnection!
+}
+
+type ProductEdge implements IEdge {
+  # cursor: String!
+  node: Product!
+}
+
+type ProductConnection implements IConnection {
+  edges: [ProductEdge!]!
+  pageInfo: PageInfo!
+  count: Int!
+}
+
+input productGetAllFilter {
+  category: String
+}
+
+type Query {
+  productGetAll(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: productGetAllFilter
+  ): ProductConnection!
+  productGetOne(id: ID!): Product!
+  productGetAllCategories: [String!]!
+}
+
+input productCreateInput {
+  title: String!
+  description: String
+  price: Float!
+  discountPercentage: Float
+  stock: Int!
+  brand: String!
+  category: String!
+  thumbnail: String
+  images: [String!]!
+}
+
+input productUpdateInput {
+  description: String
+  price: Float
+  discountPercentage: Float
+  stock: Int
+  thumbnail: String
+  images: [String!]
+}
+
+type Mutation {
+  productCreate(input: productCreateInput!): Product!
+  productUpdate(id: ID!, input: productUpdateInput!): Product!
+  productUpdateSetBlocked(id: ID!, isBlocked: Boolean!): Product!
+}

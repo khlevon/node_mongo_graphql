@@ -1,0 +1,23 @@
+type Auth {
+  token: String!
+}
+
+input authSignUpInput {
+  firstName: String!
+  lastName: String!
+  middleName: String
+  gender: EUserGender!
+  birthDate: DateTime
+  email: String!
+  username: String!
+  password: String!
+}
+
+type Query {
+  authMe: User!
+}
+
+type Mutation {
+  authSignIn(email: String!, password: String!): Auth!
+  authSignUp(input: authSignUpInput!): Auth!
+}

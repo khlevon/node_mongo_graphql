@@ -1,0 +1,52 @@
+type Comment implements INode {
+  id: ID!
+  body: String!
+  createdAt: DateTime!
+
+  # Abstractions
+  product: Product!
+  owner: User!
+  replyTo: Comment
+  replies(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: commentGetAllFilter
+  ): CommentConnection!
+}
+
+type CommentEdge implements IEdge {
+  # cursor: String!
+  node: Comment!
+}
+
+type CommentConnection implements IConnection {
+  edges: [CommentEdge!]!
+  pageInfo: PageInfo!
+  count: Int!
+}
+
+input commentGetAllFilter {
+  productId: ID
+  ownerId: ID
+  replyToId: ID
+}
+
+type Query {
+  commentGetAll(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: commentGetAllFilter
+  ): CommentConnection!
+  commentGetOne(id: ID!): Comment!
+}
+
+input commentCreateInput {
+  body: String!
+  productId: ID!
+  replyToId: ID
+}
+
+type Mutation {
+  commentCreate(input: commentCreateInput!): Comment!
+  commentDelete(id: ID!): Comment!
+}

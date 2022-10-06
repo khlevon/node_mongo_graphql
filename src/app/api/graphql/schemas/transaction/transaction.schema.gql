@@ -1,0 +1,54 @@
+type TransactionProduct {
+  quantity: Int!
+  amount: Float!
+
+  # Abstractions
+  product: Product!
+}
+
+type Transaction implements INode {
+  id: ID!
+  totalAmount: Float!
+  createdAt: DateTime!
+
+  # Abstractions
+  products: [TransactionProduct!]!
+  owner: User!
+}
+
+type TransactionEdge implements IEdge {
+  # cursor: String!
+  node: Transaction!
+}
+
+type TransactionConnection implements IConnection {
+  edges: [TransactionEdge!]!
+  pageInfo: PageInfo!
+  count: Int!
+}
+
+input transactionGetAllFilter {
+  ownerId: ID
+}
+
+type Query {
+  transactionGetAll(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: transactionGetAllFilter
+  ): TransactionConnection!
+  transactionGetOne(id: ID!): Transaction!
+}
+
+input transactionCreateInputProduct {
+  quantity: Int!
+  productId: ID!
+}
+
+input transactionCreateInput {
+  products: [transactionCreateInputProduct!]!
+}
+
+type Mutation {
+  transactionCreate(input: transactionCreateInput): Transaction!
+}

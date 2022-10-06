@@ -1,0 +1,84 @@
+enum EUserGender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum EUserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+type User implements INode {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  middleName: String
+  gender: EUserGender!
+  email: String!
+  username: String!
+  balance: Float!
+  birthDate: DateTime
+  image: String
+  userAgent: String!
+  isBlocked: Boolean!
+  role: EUserRole!
+  createdAt: DateTime!
+
+  # Abstractions
+  age: Int
+  grossRevenue(startDate: DateTime!, endDate: DateTime!): Float!
+
+  products(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: productGetAllFilter
+  ): ProductConnection!
+
+  transactions(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: transactionGetAllFilter
+  ): TransactionConnection!
+}
+
+type UserEdge implements IEdge {
+  # cursor: String!
+  node: User!
+}
+
+type UserConnection implements IConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+  count: Int!
+}
+
+input userGetAllFilter {
+  gender: EUserGender
+  username: String
+}
+
+type Query {
+  userGetAll(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: userGetAllFilter
+  ): UserConnection!
+  userGetOne(id: ID!): User!
+  userGetOneByUsername(username: String!): User!
+}
+
+input userUpdateInput {
+  firstName: String
+  lastName: String
+  middleName: String
+  gender: EUserGender
+  birthDate: DateTime
+}
+
+type Mutation {
+  userUpdate(id: ID!, input: userUpdateInput!): User!
+  userUpdateBalance(id: ID!, amount: Float!): User!
+  userUpdateSetBlocked(id: ID!, isBlocked: Boolean!): User!
+}

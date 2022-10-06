@@ -1,0 +1,45 @@
+scalar DateTime
+
+input Pagination {
+  offset: Int
+  limit: Int
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input OrderBy {
+  field: String
+  direction: SortOrder
+}
+
+type PageInfo {
+  offset: Int!
+  limit: Int!
+  hasNextPage: Boolean!
+}
+
+interface INode {
+  id: ID!
+}
+
+interface IEdge {
+  # cursor: ID!
+  node: INode!
+}
+
+interface IConnection {
+  count: Int!
+  pageInfo: PageInfo!
+  edges: [IEdge!]!
+}
+
+type Query {
+  _: String
+}
+
+type Mutation {
+  _: String
+}

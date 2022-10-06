@@ -1,0 +1,46 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+pids
+logs
+results
+tmp
+
+# Build
+
+# Coverage reports
+coverage
+
+# APP configs and secrets
+.env*
+!.env.example
+pm2.*.config.js
+!pm2.example.config.js
+
+# Dependency directory
+node_modules
+
+# Editors
+.idea
+.vscode
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist
+build
+certs/*
+!certs/.gitkeep
+
+.env*
+!.env.example

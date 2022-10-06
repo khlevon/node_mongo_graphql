@@ -1,0 +1,44 @@
+type Rating implements INode {
+  id: ID!
+  score: Int!
+  createdAt: DateTime!
+
+  # Abstractions
+  product: Product!
+  owner: User!
+}
+
+type RatingEdge implements IEdge {
+  # cursor: String!
+  node: Rating!
+}
+
+type RatingConnection implements IConnection {
+  edges: [RatingEdge!]!
+  pageInfo: PageInfo!
+  count: Int!
+}
+
+input ratingGetAllFilter {
+  productId: ID
+  ownerId: ID
+}
+
+type Query {
+  ratingGetAll(
+    pagination: Pagination
+    orderBy: OrderBy
+    filter: ratingGetAllFilter
+  ): RatingConnection!
+  ratingGetOne(id: ID!): Rating!
+}
+
+input ratingCreateInput {
+  score: Int!
+  productId: ID!
+}
+
+type Mutation {
+  ratingCreate(input: ratingCreateInput!): Rating!
+  ratingDelete(id: ID!): Rating!
+}
