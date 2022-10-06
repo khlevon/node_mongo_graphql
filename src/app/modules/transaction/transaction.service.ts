@@ -40,7 +40,7 @@ class TransactionService extends BaseService<ITransaction> {
       field: "createdAt",
       direction: "desc",
     },
-    filter: {} = {}
+    filter: { ownerId?: string } = {}
   ) {
     const {
       count,

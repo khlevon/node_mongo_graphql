@@ -194,7 +194,7 @@ const productRatingList: ISchemaLevelResolver<
   const { count, payload } = await services.ratingServices.getAll(
     { offset, limit },
     { field, direction },
-    { ...filter, productId: product.id }
+    { ...filter, productId: product.id.toString() }
   );
 
   return {

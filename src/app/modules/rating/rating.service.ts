@@ -34,7 +34,7 @@ class RatingService extends BaseService<IRating> {
       field: "createdAt",
       direction: "desc",
     },
-    filter: {} = {}
+    filter: { productId?: string; ownerId?: string } = {}
   ) {
     const { count, ratings } = await this.repos.ratingRepository.getAll(
       pagination,

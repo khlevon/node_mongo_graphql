@@ -34,7 +34,7 @@ class ProductService extends BaseService<IProduct> {
       field: "createdAt",
       direction: "desc",
     },
-    filter: {} = {}
+    filter: { category?: string; ownerId?: string; isBlocked?: boolean } = {}
   ) {
     const { count, products } = await this.repos.productRepository.getAll(
       pagination,

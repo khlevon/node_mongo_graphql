@@ -23,6 +23,8 @@ import {
 import { IUser } from "../../../../modules/user/user.model";
 import { IProduct } from "../../../../modules/product/product.model";
 import { ITransaction } from "../../../../modules/transaction/transaction.model";
+import { AppError } from "../../../../common/errors/app.error";
+import { HTTPStatuses } from "../../../../common/constants/httpStatuses";
 
 /**
  * Resolver for `userGetAll` query
@@ -166,7 +168,7 @@ const userProducts: ISchemaLevelResolver<
     {
       ...filter,
       ...(authUserRole !== EUserRole.USER ? {} : { isBlocked: false }),
-      ownerId: user.id,
+      ownerId: user.id.toString(),
     }
   );
 
@@ -204,7 +206,7 @@ const userTransactions: ISchemaLevelResolver<
   const { count, payload } = await services.transactionService.getAll(
     { offset, limit },
     { field, direction },
-    { ...filter, ownerId: user.id }
+    { ...filter, ownerId: user.id.toString() }
   );
 
   return {
