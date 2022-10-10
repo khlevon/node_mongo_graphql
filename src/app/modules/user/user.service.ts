@@ -55,7 +55,7 @@ class UserService extends BaseService<IUser> {
   }
 
   public async getOneById(id: string) {
-    const user = await this.repos.userRepository.getOne({ id });
+    const user = await this.repos.userRepository.getOneById(id);
 
     if (!user) {
       throw new AppError("User not found", {

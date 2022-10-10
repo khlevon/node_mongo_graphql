@@ -49,7 +49,7 @@ class ProductService extends BaseService<IProduct> {
   }
 
   public async getOneById(id: string) {
-    const product = await this.repos.productRepository.getOne({ id });
+    const product = await this.repos.productRepository.getOneById(id);
 
     if (!product) {
       throw new AppError("Product not found", {

@@ -58,7 +58,7 @@ class TransactionService extends BaseService<ITransaction> {
   }
 
   public async getOneById(id: string) {
-    const transaction = await this.repos.transactionRepository.getOne({ id });
+    const transaction = await this.repos.transactionRepository.getOneById(id);
 
     if (!transaction) {
       throw new AppError("Transaction not found", {

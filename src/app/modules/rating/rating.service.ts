@@ -49,7 +49,7 @@ class RatingService extends BaseService<IRating> {
   }
 
   public async getOneById(id: string) {
-    const rating = await this.repos.ratingRepository.getOne({ id });
+    const rating = await this.repos.ratingRepository.getOneById(id);
 
     if (!rating) {
       throw new AppError("Rating not found", {

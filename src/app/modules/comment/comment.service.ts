@@ -47,7 +47,7 @@ class CommentService extends BaseService<IComment> {
   }
 
   public async getOneById(id: string) {
-    const comment = await this.repos.commentRepository.getOne({ id });
+    const comment = await this.repos.commentRepository.getOneById(id);
 
     if (!comment) {
       throw new AppError("Comment not found", {
