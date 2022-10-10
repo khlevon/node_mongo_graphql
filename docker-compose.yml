@@ -3,6 +3,7 @@ services:
   db:
     image: mongo:4.4-bionic
     container_name: store_db
+
     ports:
       - ${MONGO_DB_PORT}:27017
 
@@ -19,17 +20,23 @@ services:
       - ./scripts/initMongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
 
   # app:
-  #   container_name: store_app
-  #   command: npm run watch
-  #   working_dir: /app
   #   build:
   #     context: .
   #     dockerfile: ./scripts/Dockerfile
-  #   volumes:
-  #     - .:/app
-  #     - '/app/node_modules'
-  #   tty: true
-  #   ports:
-  #     - ${APP_PORT}:4000
+  #   working_dir: /app
+  #   command: npm run watch
+  #   container_name: store_app
   #   depends_on:
   #     - db
+  #   links:
+  #     - db
+  #   ports:
+  #     - ${APP_PORT}:${APP_PORT}
+
+  #   environment:
+  #     - MONGO_DB_HOST=db
+  #     - MONGO_DB_PORT=27017
+  #     - APP_HOST=0.0.0.0
+
+  #   volumes:
+  #     - .:/app
